@@ -29,6 +29,7 @@ We always try to use the [latest possible](https://rust-lang.github.io/rustup-co
 - `rust-src`: The Rust sources of the standard library.
 - `miri`: The Rust MIR interpreter that interprets the test suite with additional checks.
 - `rustfmt`: The Rust code formatter.
+- `llvm-tools-preview`: LLVM tools.
 
 **Rust tools & toolchains:**
 

@@ -39,7 +39,7 @@ RUN	set -eux; \
 # Installs the latest common nightly for the listed components,
 # adds those components, wasm target and sets the profile to minimal
 	rustup toolchain install nightly --target wasm32-unknown-unknown \
-		--profile minimal --component rustfmt clippy miri rust-src; \
+		--profile minimal --component rustfmt clippy miri rust-src llvm-tools-preview; \
 	rustup default nightly; \
 # We require `xargo` so that `miri` runs properly
 # We require `grcov` for coverage reporting and `rust-covfix` to improve it.
