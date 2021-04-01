@@ -8,7 +8,7 @@ FROM ${REGISTRY_PATH}/base-ci:latest
 LABEL io.parity.image.authors="devops-team@parity.io" \
 	io.parity.image.vendor="Parity Technologies" \
 	io.parity.image.title="${REGISTRY_PATH}/contracts-ci-linux" \
-	io.parity.image.description="Inherits from base-ci-linux:latest. \
+	io.parity.image.description="Inherits from paritytech/base-ci. \
 llvm-dev, clang, python3, zlib1g-dev, npm, yarn, wabt, binaryen. \
 rust nightly, rustfmt, clippy, rust-src, solang, canvas-node" \
 	io.parity.image.source="https://github.com/paritytech/scripts/blob/${VCS_REF}/\
