@@ -2,15 +2,15 @@ ARG VCS_REF=master
 ARG BUILD_DATE=""
 ARG REGISTRY_PATH=docker.io/paritytech
 
-FROM ${REGISTRY_PATH}/base-ci-linux:latest
+FROM ${REGISTRY_PATH}/base-ci:latest
 
 # metadata
 LABEL summary="Image for Substrate-based projects." \
 	name="${REGISTRY_PATH}/ci-linux" \
 	maintainer="devops-team@parity.io" \
-	version="1.0" \
-	description="Inherits from base-ci-linux; chromium-driver, \
-wasm-gc, wasm-bindgen-cli, wasm-pack, cargo-audit, cargo-web, cargo-deny " \
+	version="2.0" \
+	description="Inherits from paritytech/base-ci; \
+geckodriver, wasm-gc, wasm-bindgen-cli, wasm-pack, cargo-deny " \
 	io.parity.image.vendor="Parity Technologies" \
 	io.parity.image.source="https://github.com/paritytech/scripts/blob/${VCS_REF}/\
 dockerfiles/ci-linux/Dockerfile" \
@@ -23,7 +23,17 @@ dockerfiles/ci-linux/README.md" \
 RUN set -eux && \
 	apt-get -y update && \
 	apt-get install -y --no-install-recommends \
-		chromium-driver && \
+		firefox=89.* && \
+# `geckodriver` is needed to run headless browser tests
+# we fetch the latest version number from the github api and use that release
+	curl --silent https://api.github.com/repos/mozilla/geckodriver/releases/latest | \
+		grep --only-matching -E 'https://github.com/mozilla/geckodriver/releases/download/v[0-9.]+/geckodriver-v[0-9.]+-linux64.tar.gz' | \
+		head -n1 | \
+		xargs curl -L -O && \
+	tar -xvzf geckodriver-v*-linux64.tar.gz && \
+	rm geckodriver-v*-linux64.tar.gz && \
+	chmod +x geckodriver && \
+	mv geckodriver /usr/local/bin/ && \
 # install `rust-src` component for ui test
 	rustup component add rust-src && \
 # install specific Rust nightly, default is stable, use minimum components
@@ -34,8 +44,8 @@ RUN set -eux && \
 	rustup target add wasm32-unknown-unknown && \
 	rustup target add wasm32-unknown-unknown --toolchain nightly && \
 # install cargo tools
-	cargo install cargo-audit cargo-web wasm-pack cargo-deny mdbook && \
-	cargo install --version 0.3.2 diener && \
+	cargo install wasm-pack cargo-deny && \
+	cargo install --version 0.4.0 diener && \
 # wasm-bindgen-cli version should match the one pinned in substrate
 # https://github.com/paritytech/substrate/blob/master/bin/node/browser-testing/Cargo.toml#L15
 	cargo install --version 0.2.73 wasm-bindgen-cli && \

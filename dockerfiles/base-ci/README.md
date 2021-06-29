@@ -1,10 +1,10 @@
-# base-ci-linux
+# base-ci
 
-Docker image based on [official Debian image](https://hub.docker.com/_/debian) debian:buster.
+Docker image based on [official Ubuntu 20.04 image](https://hub.docker.com/_/ubuntu) ubuntu:20.04.
 
-Used as base for `Substrate`-based CI images.
+Used as a base for our CI images.
 
-Our base CI image `<base-ci-linux:latest>`.
+Our base CI image `<base-ci:latest>`.
 
 Used to build and test Substrate-based projects.
 
@@ -24,7 +24,7 @@ Used to build and test Substrate-based projects.
 - `ca-certificates`
 - `jq`
 
-[Click here](https://hub.docker.com/repository/docker/paritytech/base-ci-linux) for the registry.
+[Click here](https://hub.docker.com/repository/docker/paritytech/base-ci) for the registry.
 
 **Rust tools & toolchains:**
 
@@ -34,5 +34,5 @@ Used to build and test Substrate-based projects.
 ## Usage
 
 ```Dockerfile
-FROM docker.io/paritytech/base-ci-linux:latest
+FROM docker.io/paritytech/base-ci:latest
 ```
