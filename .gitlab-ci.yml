@@ -119,6 +119,11 @@ awscli:
   script:
     - *push_to_docker_hub
 
+musl-ci-linux:
+    <<:                              *docker_build
+    script:
+      - *push_to_docker_hub
+      
 tools:
   <<:                              *docker_build
   script:

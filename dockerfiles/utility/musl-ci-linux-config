@@ -1,0 +1,5 @@
+[target.x86_64-unknown-linux-musl]
+# Enables the aes-ni instructions for RustCrypto dependency.
+rustflags = ["-C","target-feature=+aes,+sse2,+ssse3","-C", "link-arg=-nostartfiles", "-C", "target-feature=+crt-static"]
+linker = "x86_64-unknown-linux-musl-ld"
+ar = "x86_64-linux-musl-gcc-ar"
